@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/show_fragment"
-        android:name="jp.co.yumemi.android.codecheck.ShowFragment"
+        android:name="jp.co.yumemi.android.codecheck.show.ShowFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_show">
         <argument
