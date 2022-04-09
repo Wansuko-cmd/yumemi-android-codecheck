@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentIndexBinding
+import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
@@ -32,7 +33,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         val dividerItemDecoration =
             DividerItemDecoration(requireContext(), layoutManager.orientation)
         val adapter = CustomAdapter(object : CustomAdapter.OnItemClickListener {
-            override fun itemClick(item: Item) {
+            override fun itemClick(item: GithubRepoUiState) {
                 gotoRepositoryFragment(item)
             }
         })
@@ -57,31 +58,31 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         }
     }
 
-    fun gotoRepositoryFragment(item: Item) {
+    fun gotoRepositoryFragment(item: GithubRepoUiState) {
         val action = IndexFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
     }
 }
 
-val diff_util = object : DiffUtil.ItemCallback<Item>() {
-    override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+val diff_util = object : DiffUtil.ItemCallback<GithubRepoUiState>() {
+    override fun areItemsTheSame(oldItem: GithubRepoUiState, newItem: GithubRepoUiState): Boolean {
         return oldItem.name == newItem.name
     }
 
-    override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+    override fun areContentsTheSame(oldItem: GithubRepoUiState, newItem: GithubRepoUiState): Boolean {
         return oldItem == newItem
     }
 }
 
 class CustomAdapter(
     private val itemClickListener: OnItemClickListener,
-) : ListAdapter<Item, CustomAdapter.ViewHolder>(diff_util) {
+) : ListAdapter<GithubRepoUiState, CustomAdapter.ViewHolder>(diff_util) {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface OnItemClickListener {
-        fun itemClick(item: Item)
+        fun itemClick(item: GithubRepoUiState)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

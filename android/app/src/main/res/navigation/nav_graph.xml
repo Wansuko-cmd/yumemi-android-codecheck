@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_show">
         <argument
             android:name="item"
-            app:argType="jp.co.yumemi.android.codecheck.index.Item" />
+            app:argType="jp.co.yumemi.android.codecheck.utils.GithubRepoUiState" />
     </fragment>
 
 </navigation>
