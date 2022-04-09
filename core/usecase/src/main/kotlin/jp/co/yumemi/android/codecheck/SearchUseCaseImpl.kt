@@ -13,7 +13,7 @@ class SearchUseCaseImpl(
                 failure = { it.toSearchUseCaseException() }
             )
 
-    private fun SearchUseCaseQueryServiceException.toSearchUseCaseException() = when(this) {
+    private fun SearchUseCaseQueryServiceException.toSearchUseCaseException() = when (this) {
         is SearchUseCaseQueryServiceException.ConnectionError ->
             SearchUseCaseException.SystemError(
                 message = this.message,
