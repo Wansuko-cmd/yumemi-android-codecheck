@@ -25,7 +25,7 @@ import java.util.Date
 /**
  * TwoFragment で使う
  */
-class OneViewModel(
+class IndexViewModel(
     val context: Context
 ) : ViewModel() {
 
