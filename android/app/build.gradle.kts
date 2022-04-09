@@ -10,7 +10,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
-        applicationId = "jp.co.yumemi.android.codecheck"
+        applicationId = "jp.jp.co.yumemi.android.codecheck"
         minSdk = 23
         targetSdk = 31
         versionCode = 1
