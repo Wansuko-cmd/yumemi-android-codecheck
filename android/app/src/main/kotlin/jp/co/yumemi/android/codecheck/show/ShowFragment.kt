@@ -12,29 +12,26 @@ import coil.load
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.codecheck.databinding.FragmentShowBinding
+import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
     private val args: ShowFragmentArgs by navArgs()
-
-    private var binding: FragmentShowBinding? = null
-    private val _binding get() = binding!!
+    private val githubRepo: GithubRepoUiState by lazy { args.githubRepo }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        binding = FragmentShowBinding.bind(view)
+        val binding = FragmentShowBinding.bind(view)
 
-        val item = args.item
-
-        _binding.ownerIconView.load(item.ownerIconUrl)
-        _binding.nameView.text = item.name
-        _binding.languageView.text = item.language
-        _binding.starsView.text = "${item.stargazersCount} stars"
-        _binding.watchersView.text = "${item.watchersCount} watchers"
-        _binding.forksView.text = "${item.forksCount} forks"
-        _binding.openIssuesView.text = "${item.openIssuesCount} open issues"
+        binding.ownerIconView.load(githubRepo.ownerIconUrl)
+        binding.nameView.text = githubRepo.name
+        binding.languageView.text = githubRepo.language
+        binding.starsView.text = "${githubRepo.stargazersCount} stars"
+        binding.watchersView.text = "${githubRepo.watchersCount} watchers"
+        binding.forksView.text = "${githubRepo.forksCount} forks"
+        binding.openIssuesView.text = "${githubRepo.openIssuesCount} open issues"
     }
 }
