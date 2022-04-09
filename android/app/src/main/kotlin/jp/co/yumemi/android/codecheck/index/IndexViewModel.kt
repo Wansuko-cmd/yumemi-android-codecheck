@@ -8,8 +8,10 @@ import androidx.lifecycle.viewModelScope
 import jp.co.yumemi.android.codecheck.SearchUseCase
 import jp.co.yumemi.android.codecheck.mapBoth
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState.Companion.toUiState
+import jp.co.yumemi.android.codecheck.utils.asState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class IndexViewModel(private val searchUseCase: SearchUseCase) : ViewModel() {
@@ -29,6 +31,8 @@ class IndexViewModel(private val searchUseCase: SearchUseCase) : ViewModel() {
                     success = { githubRepos -> githubRepos.map { it.toUiState() } },
                     failure = { IndexErrorUiState(it.message.orEmpty()) }
                 )
+                .asState()
+                .also { githubRepos -> _uiState.update { it.copyWithGithubRepos(githubRepos) } }
         }
     }
 }
