@@ -104,13 +104,13 @@ class CustomAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_item, parent, false)
+            .inflate(R.layout.layout_index_github_repo_row, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder.itemView.findViewById<View>(R.id.repositoryNameView) as TextView).text =
+        (holder.itemView.findViewById<View>(R.id.layout_index_github_repo_name) as TextView).text =
             item.name
 
         holder.itemView.setOnClickListener {
