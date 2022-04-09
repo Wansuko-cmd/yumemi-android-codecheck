@@ -7,3 +7,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Android Engineer CodeCheck"
 include("android", "android:app")
+include("core", "core:domain")
