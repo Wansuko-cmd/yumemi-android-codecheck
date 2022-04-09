@@ -6,12 +6,17 @@
         <variable
             name="name"
             type="String" />
+
+        <variable
+            name="onClickRow"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{onClickRow}">
 
         <TextView
             android:id="@+id/layout_index_github_repo_name"
