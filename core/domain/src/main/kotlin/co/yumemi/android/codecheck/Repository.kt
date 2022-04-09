@@ -1,4 +1,4 @@
-package jp.co.yumemi.android.codecheck.domain
+package co.yumemi.android.codecheck
 
 data class Repository(
     val name: Name,
