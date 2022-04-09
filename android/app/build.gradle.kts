@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.20"
 }
 
 android {
@@ -53,7 +54,11 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
+    implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-android:1.6.4")
+    implementation("io.ktor:ktor-client-serialization:1.6.4")
+
     implementation("io.coil-kt:coil:1.3.2")
 
     // Project
@@ -65,6 +70,9 @@ dependencies {
     val koinVersion = "3.1.6"
     implementation("io.insert-koin:koin-core:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
+
+    // KotlinX Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

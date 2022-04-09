@@ -1,8 +1,9 @@
 package jp.co.yumemi.android.codecheck.infra
 
-import android.os.Parcelable
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.parameter
@@ -17,17 +18,29 @@ import jp.co.yumemi.android.codecheck.SearchUseCaseQueryService
 import jp.co.yumemi.android.codecheck.SearchUseCaseQueryServiceException
 import jp.co.yumemi.android.codecheck.StargazersCount
 import jp.co.yumemi.android.codecheck.WatchersCount
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 class SearchUseCaseQueryServiceImpl : SearchUseCaseQueryService {
     override suspend fun get(
         queryString: String,
     ): Maybe<List<GithubRepo>, SearchUseCaseQueryServiceException> = try {
-        val client = HttpClient(Android)
-        client.get<List<GithubRepoParcelable>>("https://api.github.com/search/repositories") {
+        val client = HttpClient(Android) {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(
+                    kotlinx.serialization.json.Json {
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                        coerceInputValues = true
+                    }
+                )
+            }
+        }
+        client.get<GithubRepoSerializable>("https://api.github.com/search/repositories") {
             header("Accept", "application/vnd.github.v3+json")
             parameter("q", queryString)
         }
+            .items
             .map { it.toGithubRepo() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
@@ -35,19 +48,24 @@ class SearchUseCaseQueryServiceImpl : SearchUseCaseQueryService {
     }
 }
 
-@Parcelize
-data class GithubRepoParcelable(
-    val name: String,
-    val ownerIconUrl: String,
-    val language: String,
-    val stargazersCount: Long,
-    val watchersCount: Long,
-    val forksCount: Long,
-    val openIssuesCount: Long,
-) : Parcelable {
+@Serializable
+data class GithubRepoSerializable(
+    val items: List<GithubRepoItem>
+)
+
+@Serializable
+data class GithubRepoItem(
+    @SerialName("full_name") val name: String,
+    @SerialName("owner") val owner: GithubRepoOwner,
+    val language: String = "",
+    @SerialName("stargazers_count") val stargazersCount: Long,
+    @SerialName("watchers_count") val watchersCount: Long,
+    @SerialName("forks_count") val forksCount: Long,
+    @SerialName("open_issues_count") val openIssuesCount: Long,
+) {
     fun toGithubRepo() = GithubRepo(
         name = Name(name),
-        ownerIconUrl = OwnerIconUrl(ownerIconUrl),
+        ownerIconUrl = OwnerIconUrl(owner.avatarUrl),
         language = Language(language),
         stargazersCount = StargazersCount(stargazersCount),
         watchersCount = WatchersCount(watchersCount),
@@ -55,3 +73,8 @@ data class GithubRepoParcelable(
         openIssuesCount = OpenIssuesCount(openIssuesCount),
     )
 }
+
+@Serializable
+data class GithubRepoOwner(
+    @SerialName("avatar_url") val avatarUrl: String,
+)
