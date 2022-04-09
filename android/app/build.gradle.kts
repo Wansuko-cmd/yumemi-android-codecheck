@@ -74,6 +74,12 @@ dependencies {
     // KotlinX Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
+    // Epoxy
+    val epoxyVersion = "4.6.3"
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
+    kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
