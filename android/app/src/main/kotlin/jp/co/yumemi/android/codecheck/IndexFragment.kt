@@ -16,16 +16,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import jp.co.yumemi.android.codecheck.databinding.FragmentOneBinding
+import jp.co.yumemi.android.codecheck.databinding.FragmentIndexBinding
 
-class OneFragment : Fragment(R.layout.fragment_one) {
+class IndexFragment : Fragment(R.layout.fragment_index) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentOneBinding.bind(view)
+        val binding = FragmentIndexBinding.bind(view)
 
-        val viewModel = OneViewModel(requireContext())
+        val viewModel = IndexViewModel(requireContext())
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
@@ -57,7 +57,7 @@ class OneFragment : Fragment(R.layout.fragment_one) {
     }
 
     fun gotoRepositoryFragment(item: Item) {
-        val action = OneFragmentDirections
+        val action = IndexFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(item = item)
         findNavController().navigate(action)
     }

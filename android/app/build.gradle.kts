@@ -56,6 +56,11 @@ dependencies {
     implementation("io.ktor:ktor-client-android:1.6.4")
     implementation("io.coil-kt:coil:1.3.2")
 
+    // Project
+    implementation(project(":core:domain"))
+    implementation(project(":core:usecase"))
+    implementation(project(":utils"))
+
     // Koin
     val koinVersion = "3.1.6"
     implementation("io.insert-koin:koin-core:$koinVersion")
