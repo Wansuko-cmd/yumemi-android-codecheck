@@ -9,7 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -19,15 +23,18 @@ import androidx.recyclerview.widget.RecyclerView
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentIndexBinding
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
+import jp.co.yumemi.android.codecheck.utils.consume
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
+
+    private val indexViewModel by viewModel<IndexViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentIndexBinding.bind(view)
-
-        val viewModel = IndexViewModel(requireContext())
 
         val layoutManager = LinearLayoutManager(requireContext())
         val dividerItemDecoration =
@@ -42,9 +49,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
-                        viewModel.searchResults(it).apply {
-                            adapter.submitList(this)
-                        }
+                        indexViewModel.fetch(it)
                     }
                     return@setOnEditorActionListener true
                 }
@@ -55,6 +60,18 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             it.layoutManager = layoutManager
             it.addItemDecoration(dividerItemDecoration)
             it.adapter = adapter
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                indexViewModel.uiState.collect { indexUiState ->
+                    indexUiState.githubRepos.consume(
+                        success = { adapter.submitList(it) },
+                        failure = { Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show() },
+                        loading = {},
+                    )
+                }
+            }
         }
     }
 
