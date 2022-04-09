@@ -1,6 +1,6 @@
 package jp.co.yumemi.android.codecheck
 
-data class Repository(
+data class GithubRepo(
     val name: Name,
     val ownerIconUrl: OwnerIconUrl,
     val language: Language,
