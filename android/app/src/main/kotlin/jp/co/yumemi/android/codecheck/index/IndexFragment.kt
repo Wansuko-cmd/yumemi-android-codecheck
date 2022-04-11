@@ -9,8 +9,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,6 @@ import jp.co.yumemi.android.codecheck.databinding.FragmentIndexBinding
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 import jp.co.yumemi.android.codecheck.utils.consume
 import jp.co.yumemi.android.codecheck.utils.ext.launchInLifecycleScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
