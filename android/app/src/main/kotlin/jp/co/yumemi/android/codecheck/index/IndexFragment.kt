@@ -66,9 +66,9 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         }
     }
 
-    fun gotoRepositoryFragment(item: GithubRepoUiState) {
+    fun gotoRepositoryFragment(githubRepo: GithubRepoUiState) {
         val action = IndexFragmentDirections
-            .actionRepositoriesFragmentToRepositoryFragment(item = item)
+            .actionRepositoriesFragmentToRepositoryFragment(githubRepo = githubRepo)
         findNavController().navigate(action)
     }
 }
