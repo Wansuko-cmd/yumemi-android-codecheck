@@ -9,15 +9,19 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
+import io.ktor.http.parametersOf
 import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.TopActivity.Companion.lastSearchDate
 import jp.co.yumemi.android.codecheck.databinding.FragmentShowBinding
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
     private val args: ShowFragmentArgs by navArgs()
     private val githubRepo: GithubRepoUiState by lazy { args.githubRepo }
+    private val showViewModel: ShowViewModel by viewModel { parametersOf(githubRepo) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
