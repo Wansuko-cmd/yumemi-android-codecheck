@@ -35,13 +35,13 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
                 it.githubRepoUiState.consume(
                     success = {
                         binding.apply {
-                            ownerIconView.load(githubRepo.ownerIconUrl)
-                            nameView.text = githubRepo.name
-                            languageView.text = githubRepo.language
-                            starsView.text = "${githubRepo.stargazersCount} stars"
-                            watchersView.text = "${githubRepo.watchersCount} watchers"
-                            forksView.text = "${githubRepo.forksCount} forks"
-                            openIssuesView.text = "${githubRepo.openIssuesCount} open issues"
+                            showOwnerIconView.load(githubRepo.ownerIconUrl)
+                            showNameView.text = githubRepo.name
+                            showLanguageView.text = githubRepo.language
+                            showStarsView.text = "${githubRepo.stargazersCount} stars"
+                            showWatchersView.text = "${githubRepo.watchersCount} watchers"
+                            showForksView.text = "${githubRepo.forksCount} forks"
+                            showOpenIssuesView.text = "${githubRepo.openIssuesCount} open issues"
                         }
                     }
                 )
