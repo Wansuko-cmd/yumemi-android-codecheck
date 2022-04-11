@@ -18,6 +18,7 @@ import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.databinding.FragmentIndexBinding
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 import jp.co.yumemi.android.codecheck.utils.consume
+import jp.co.yumemi.android.codecheck.utils.ext.launchInLifecycleScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,15 +54,13 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             adapter = indexEpoxyController.adapter
         }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                indexViewModel.uiState.collect { indexUiState ->
-                    indexUiState.githubRepos.consume(
-                        success = { indexEpoxyController.setData(it) },
-                        failure = { Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show() },
-                        loading = {},
-                    )
-                }
+        launchInLifecycleScope(Lifecycle.State.STARTED) {
+            indexViewModel.uiState.collect { indexUiState ->
+                indexUiState.githubRepos.consume(
+                    success = { indexEpoxyController.setData(it) },
+                    failure = { Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show() },
+                    loading = {},
+                )
             }
         }
     }
