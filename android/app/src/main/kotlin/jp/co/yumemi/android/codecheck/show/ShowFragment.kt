@@ -24,14 +24,14 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         Log.d("検索した日時", lastSearchDate.toString())
 
-        val binding = FragmentShowBinding.bind(view)
-
-        binding.ownerIconView.load(githubRepo.ownerIconUrl)
-        binding.nameView.text = githubRepo.name
-        binding.languageView.text = githubRepo.language
-        binding.starsView.text = "${githubRepo.stargazersCount} stars"
-        binding.watchersView.text = "${githubRepo.watchersCount} watchers"
-        binding.forksView.text = "${githubRepo.forksCount} forks"
-        binding.openIssuesView.text = "${githubRepo.openIssuesCount} open issues"
+        FragmentShowBinding.bind(view).apply {
+            ownerIconView.load(githubRepo.ownerIconUrl)
+            nameView.text = githubRepo.name
+            languageView.text = githubRepo.language
+            starsView.text = "${githubRepo.stargazersCount} stars"
+            watchersView.text = "${githubRepo.watchersCount} watchers"
+            forksView.text = "${githubRepo.forksCount} forks"
+            openIssuesView.text = "${githubRepo.openIssuesCount} open issues"
+        }
     }
 }
