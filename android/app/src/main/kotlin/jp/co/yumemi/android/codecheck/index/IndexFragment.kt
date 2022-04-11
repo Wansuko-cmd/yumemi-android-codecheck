@@ -28,7 +28,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         val binding = FragmentIndexBinding.bind(view)
 
-        binding.searchInputText
+        binding.indexSearchInputText
             .setOnEditorActionListener { editText, action, _ ->
                 if (action == EditorInfo.IME_ACTION_SEARCH) {
                     editText.text.toString().let {
@@ -41,7 +41,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         val indexEpoxyController = IndexEpoxyController(::gotoRepositoryFragment)
 
-        binding.recyclerView.apply {
+        binding.indexRecyclerView.apply {
             addItemDecoration(
                 DividerItemDecoration(
                     requireContext(),
