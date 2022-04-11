@@ -41,13 +41,13 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
 
         val indexEpoxyController = IndexEpoxyController(::gotoRepositoryFragment)
 
-        val layoutManager = LinearLayoutManager(requireContext())
-        val dividerItemDecoration =
-            DividerItemDecoration(requireContext(), layoutManager.orientation)
-
         binding.recyclerView.apply {
-            this.layoutManager = layoutManager
-            addItemDecoration(dividerItemDecoration)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    (layoutManager as LinearLayoutManager).orientation
+                )
+            )
             adapter = indexEpoxyController.adapter
         }
 
