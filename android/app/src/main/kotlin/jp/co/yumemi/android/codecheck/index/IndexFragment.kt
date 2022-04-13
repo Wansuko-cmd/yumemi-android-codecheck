@@ -39,7 +39,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
                 return@setOnEditorActionListener false
             }
 
-        val indexEpoxyController = IndexEpoxyController(::gotoRepositoryFragment)
+        val indexEpoxyController = IndexEpoxyController(::navigateToShow)
 
         binding.indexRecyclerView.apply {
             addItemDecoration(
@@ -62,7 +62,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
         }
     }
 
-    fun gotoRepositoryFragment(githubRepo: GithubRepoUiState) {
+    fun navigateToShow(githubRepo: GithubRepoUiState) {
         val action = IndexFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(githubRepo = githubRepo)
         findNavController().navigate(action)
