@@ -1,5 +1,6 @@
 name: 'ktlintを実行'
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - opened
