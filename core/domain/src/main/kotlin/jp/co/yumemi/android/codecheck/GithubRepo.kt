@@ -2,12 +2,12 @@ package jp.co.yumemi.android.codecheck
 
 data class GithubRepo(
     val name: Name,
-    val ownerIconUrl: OwnerIconUrl,
-    val language: Language,
-    val stargazersCount: StargazersCount,
-    val watchersCount: WatchersCount,
-    val forksCount: ForksCount,
-    val openIssuesCount: OpenIssuesCount,
+    val ownerIconUrl: OwnerIconUrl?,
+    val language: Language?,
+    val stargazersCount: StargazersCount?,
+    val watchersCount: WatchersCount?,
+    val forksCount: ForksCount?,
+    val openIssuesCount: OpenIssuesCount?,
 )
 
 @JvmInline
