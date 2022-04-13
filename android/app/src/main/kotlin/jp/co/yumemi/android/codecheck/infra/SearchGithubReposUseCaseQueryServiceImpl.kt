@@ -67,21 +67,21 @@ data class GithubRepoSerializable(
 @Serializable
 data class GithubRepoItem(
     @SerialName("full_name") val name: String,
-    @SerialName("owner") val owner: GithubRepoOwner,
-    val language: String = "",
-    @SerialName("stargazers_count") val stargazersCount: Long,
-    @SerialName("watchers_count") val watchersCount: Long,
-    @SerialName("forks_count") val forksCount: Long,
-    @SerialName("open_issues_count") val openIssuesCount: Long,
+    @SerialName("owner") val owner: GithubRepoOwner?,
+    val language: String?,
+    @SerialName("stargazers_count") val stargazersCount: Long?,
+    @SerialName("watchers_count") val watchersCount: Long?,
+    @SerialName("forks_count") val forksCount: Long?,
+    @SerialName("open_issues_count") val openIssuesCount: Long?,
 ) {
     fun toGithubRepo() = GithubRepo(
         name = Name(name),
-        ownerIconUrl = OwnerIconUrl(owner.avatarUrl),
-        language = Language(language),
-        stargazersCount = StargazersCount(stargazersCount),
-        watchersCount = WatchersCount(watchersCount),
-        forksCount = ForksCount(forksCount),
-        openIssuesCount = OpenIssuesCount(openIssuesCount),
+        ownerIconUrl = owner?.avatarUrl?.let { OwnerIconUrl(it) },
+        language = language?.let { Language(it) },
+        stargazersCount = stargazersCount?.let { StargazersCount(it) },
+        watchersCount = watchersCount?.let { WatchersCount(it) },
+        forksCount = forksCount?.let { ForksCount(forksCount) },
+        openIssuesCount = openIssuesCount?.let { OpenIssuesCount(openIssuesCount) },
     )
 }
 
