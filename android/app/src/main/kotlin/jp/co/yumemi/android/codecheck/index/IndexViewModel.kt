@@ -36,7 +36,7 @@ class IndexViewModel(
                 .mapBoth(
                     success = { githubRepos -> githubRepos.map { it.toUiState() } },
                     failure = {
-                        when(it) {
+                        when (it) {
                             is SearchGithubReposUseCaseException.ConnectionException ->
                                 IndexErrorUiState(application.getString(R.string.index_message_connection_error))
                         }

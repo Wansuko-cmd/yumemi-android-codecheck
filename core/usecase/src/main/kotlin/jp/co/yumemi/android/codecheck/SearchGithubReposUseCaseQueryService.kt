@@ -9,5 +9,5 @@ sealed class SearchGithubReposUseCaseQueryServiceException : Exception() {
     class SystemError(
         override val message: String,
         override val cause: Throwable,
-    ): SearchGithubReposUseCaseQueryServiceException()
+    ) : SearchGithubReposUseCaseQueryServiceException()
 }
