@@ -40,8 +40,7 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
             header("Accept", "application/vnd.github.v3+json")
             parameter("q", queryString)
         }
-            .items
-            .map { it.toGithubRepo() }
+            .toGithubRepos()
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
@@ -50,8 +49,10 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
 
 @Serializable
 data class GithubRepoSerializable(
-    val items: List<GithubRepoItem>
-)
+    val items: List<GithubRepoItem>,
+) {
+    fun toGithubRepos() = items.map { it.toGithubRepo() }
+}
 
 @Serializable
 data class GithubRepoItem(
