@@ -5,5 +5,9 @@ interface SearchGithubReposUseCaseQueryService {
 }
 
 sealed class SearchGithubReposUseCaseQueryServiceException : Exception() {
-    class ConnectionError(override val message: String) : SearchGithubReposUseCaseQueryServiceException()
+    class ConnectionException(override val message: String) : SearchGithubReposUseCaseQueryServiceException()
+    class SystemError(
+        override val message: String,
+        override val cause: Throwable,
+    ) : SearchGithubReposUseCaseQueryServiceException()
 }

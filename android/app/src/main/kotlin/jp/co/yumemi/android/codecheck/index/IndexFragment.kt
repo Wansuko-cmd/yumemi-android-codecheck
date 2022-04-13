@@ -55,14 +55,18 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             indexViewModel.uiState.collect { indexUiState ->
                 indexUiState.githubRepos.consume(
                     success = { indexEpoxyController.setData(it) },
-                    failure = { Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show() },
+                    failure = { showErrorMessage(it.message) },
                     loading = {},
                 )
             }
         }
     }
 
-    fun navigateToShow(githubRepo: GithubRepoUiState) {
+    private fun showErrorMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun navigateToShow(githubRepo: GithubRepoUiState) {
         val action = IndexFragmentDirections
             .actionRepositoriesFragmentToRepositoryFragment(githubRepo = githubRepo)
         findNavController().navigate(action)

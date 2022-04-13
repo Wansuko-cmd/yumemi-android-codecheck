@@ -2,6 +2,8 @@ package jp.co.yumemi.android.codecheck.infra
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.features.HttpRequestTimeoutException
+import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
@@ -20,6 +22,7 @@ import jp.co.yumemi.android.codecheck.StargazersCount
 import jp.co.yumemi.android.codecheck.WatchersCount
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.net.UnknownHostException
 
 class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQueryService {
     override suspend fun get(
@@ -35,6 +38,9 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
                     }
                 )
             }
+            install(HttpTimeout) {
+                requestTimeoutMillis = 2000
+            }
         }
         client.get<GithubRepoSerializable>("https://api.github.com/search/repositories") {
             header("Accept", "application/vnd.github.v3+json")
@@ -42,8 +48,12 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
         }
             .toGithubRepos()
             .let { Maybe.Success(it) }
+    } catch (e: HttpRequestTimeoutException) {
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
+    } catch (e: UnknownHostException) {
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
     } catch (e: Exception) {
-        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
 }
 
@@ -57,21 +67,21 @@ data class GithubRepoSerializable(
 @Serializable
 data class GithubRepoItem(
     @SerialName("full_name") val name: String,
-    @SerialName("owner") val owner: GithubRepoOwner,
-    val language: String = "",
-    @SerialName("stargazers_count") val stargazersCount: Long,
-    @SerialName("watchers_count") val watchersCount: Long,
-    @SerialName("forks_count") val forksCount: Long,
-    @SerialName("open_issues_count") val openIssuesCount: Long,
+    @SerialName("owner") val owner: GithubRepoOwner?,
+    val language: String?,
+    @SerialName("stargazers_count") val stargazersCount: Long?,
+    @SerialName("watchers_count") val watchersCount: Long?,
+    @SerialName("forks_count") val forksCount: Long?,
+    @SerialName("open_issues_count") val openIssuesCount: Long?,
 ) {
     fun toGithubRepo() = GithubRepo(
         name = Name(name),
-        ownerIconUrl = OwnerIconUrl(owner.avatarUrl),
-        language = Language(language),
-        stargazersCount = StargazersCount(stargazersCount),
-        watchersCount = WatchersCount(watchersCount),
-        forksCount = ForksCount(forksCount),
-        openIssuesCount = OpenIssuesCount(openIssuesCount),
+        ownerIconUrl = owner?.avatarUrl?.let { OwnerIconUrl(it) },
+        language = language?.let { Language(it) },
+        stargazersCount = stargazersCount?.let { StargazersCount(it) },
+        watchersCount = watchersCount?.let { WatchersCount(it) },
+        forksCount = forksCount?.let { ForksCount(forksCount) },
+        openIssuesCount = openIssuesCount?.let { OpenIssuesCount(openIssuesCount) },
     )
 }
 

@@ -11,6 +11,4 @@ data class IndexUiState(
     ) = this.copy(githubRepos = githubRepos)
 }
 
-data class IndexErrorUiState(
-    val message: String,
-)
+data class IndexErrorUiState(val message: String)

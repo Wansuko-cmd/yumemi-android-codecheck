@@ -4,13 +4,14 @@ import jp.co.yumemi.android.codecheck.index.IndexViewModel
 import jp.co.yumemi.android.codecheck.infra.SearchGithubReposUseCaseQueryServiceImpl
 import jp.co.yumemi.android.codecheck.show.ShowViewModel
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val module = module {
 
     /*** ViewModel ***/
-    viewModel { IndexViewModel(get()) }
+    viewModel { IndexViewModel(androidApplication(), get()) }
     viewModel { (githubRepo: GithubRepoUiState) -> ShowViewModel(githubRepo) }
 
     /*** UseCase ***/
