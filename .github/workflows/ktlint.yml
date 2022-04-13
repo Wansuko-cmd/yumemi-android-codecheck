@@ -1,18 +1,19 @@
 name: 'ktlintを実行'
 on:
-  workflow_dispatch:
-  pull_request:
-    types:
-      - opened
+  - pull_request
+  - push
+  - workflow_dispatch
 jobs:
   ktlint:
     runs-on: ubuntu-latest
     steps:
       - name: 現ブランチからチェックアウト
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: ktlintを実行
-        uses: ScaCap/action-ktlint@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+      - name: ./gradlewに権限を付与
+        run: |
+          chmod 777 ${{ github.workspace }}/gradlew
+
+      - name: ktlintを実行(gradlew)
+        run: |
+          ${{ github.workspace }}/gradlew ktlintCheck
