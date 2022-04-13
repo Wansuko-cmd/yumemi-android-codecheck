@@ -1,5 +1,5 @@
 name: 'ktlintを実行'
-on:
+on: [workflow_dispatch, push, pull_request]
   workflow_dispatch:
   push:
   pull_request:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 現ブランチからチェックアウト
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
 
       - name: ktlintを実行
         uses: ScaCap/action-ktlint@master
