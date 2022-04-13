@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class IndexViewModel(private val searchUseCase: SearchGithubReposUseCase) : ViewModel() {
+class IndexViewModel(private val searchGithubUseCase: SearchGithubReposUseCase) : ViewModel() {
     private val _uiState = MutableStateFlow(IndexUiState())
     val uiState get() = _uiState.asStateFlow()
 
@@ -25,7 +25,7 @@ class IndexViewModel(private val searchUseCase: SearchGithubReposUseCase) : View
 
     private fun fetchGithubRepo(queryString: String) {
         viewModelScope.launch {
-            searchUseCase
+            searchGithubUseCase
                 .get(queryString)
                 .mapBoth(
                     success = { githubRepos -> githubRepos.map { it.toUiState() } },
