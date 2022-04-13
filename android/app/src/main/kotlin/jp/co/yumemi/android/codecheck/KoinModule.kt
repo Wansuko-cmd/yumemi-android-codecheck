@@ -1,7 +1,7 @@
 package jp.co.yumemi.android.codecheck
 
 import jp.co.yumemi.android.codecheck.index.IndexViewModel
-import jp.co.yumemi.android.codecheck.infra.SearchUseCaseQueryServiceImpl
+import jp.co.yumemi.android.codecheck.infra.SearchGithubReposUseCaseQueryServiceImpl
 import jp.co.yumemi.android.codecheck.show.ShowViewModel
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,8 +14,8 @@ val module = module {
     viewModel { (githubRepo: GithubRepoUiState) -> ShowViewModel(githubRepo) }
 
     /*** UseCase ***/
-    single<SearchUseCase> { SearchUseCaseImpl(get()) }
+    single<SearchGithubReposUseCase> { SearchGithubReposUseCaseImpl(get()) }
 
     /*** QueryService ***/
-    single<SearchUseCaseQueryService> { SearchUseCaseQueryServiceImpl() }
+    single<SearchGithubReposUseCaseQueryService> { SearchGithubReposUseCaseQueryServiceImpl() }
 }
