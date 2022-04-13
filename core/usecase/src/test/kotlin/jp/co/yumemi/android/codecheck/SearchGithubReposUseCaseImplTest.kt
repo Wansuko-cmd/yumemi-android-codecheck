@@ -5,6 +5,8 @@ package jp.co.yumemi.android.codecheck
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.confirmVerified
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -51,6 +53,9 @@ class SearchGithubReposUseCaseImplTest {
             .let { Maybe.Success(it) }
 
         assertThat(actual).isEqualTo(expected)
+
+        coVerify(exactly = 1) { queryService.get(mockedQueryString) }
+        confirmVerified(queryService)
     }
 
     @Test
@@ -65,5 +70,7 @@ class SearchGithubReposUseCaseImplTest {
         val expected = Maybe.Failure(SearchGithubReposUseCaseException.ConnectionException(""))
 
         assertThat(actual).isEqualTo(expected)
+        coVerify(exactly = 1) { queryService.get(mockedQueryString) }
+        confirmVerified(queryService)
     }
 }
