@@ -6,7 +6,7 @@ interface SearchGithubReposUseCase {
     ): Maybe<List<GithubRepoUseCaseModel>, SearchGithubReposUseCaseException>
 }
 
-sealed class SearchGithubReposUseCaseException : Throwable() {
+sealed class SearchGithubReposUseCaseException : Exception() {
     class SystemError(
         override val message: String,
         override val cause: Throwable,
