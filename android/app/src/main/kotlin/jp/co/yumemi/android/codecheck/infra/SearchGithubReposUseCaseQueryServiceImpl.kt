@@ -52,6 +52,8 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
     } catch (e: UnknownHostException) {
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
+    } catch (e: Exception) {
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
 }
 
