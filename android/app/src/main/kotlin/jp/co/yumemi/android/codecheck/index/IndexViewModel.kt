@@ -3,9 +3,12 @@
  */
 package jp.co.yumemi.android.codecheck.index
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import jp.co.yumemi.android.codecheck.SearchGithubReposUseCase
+import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseException
 import jp.co.yumemi.android.codecheck.mapBoth
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState.Companion.toUiState
 import jp.co.yumemi.android.codecheck.utils.asState
@@ -14,7 +17,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class IndexViewModel(private val searchGithubUseCase: SearchGithubReposUseCase) : ViewModel() {
+class IndexViewModel(
+    private val application: Application,
+    private val searchGithubUseCase: SearchGithubReposUseCase,
+) : ViewModel() {
     private val _uiState = MutableStateFlow(IndexUiState())
     val uiState get() = _uiState.asStateFlow()
 
@@ -29,7 +35,11 @@ class IndexViewModel(private val searchGithubUseCase: SearchGithubReposUseCase) 
                 .get(queryString)
                 .mapBoth(
                     success = { githubRepos -> githubRepos.map { it.toUiState() } },
-                    failure = { IndexErrorUiState(it.message.orEmpty()) }
+                    failure = {
+                        when(it) {
+                            is SearchGithubReposUseCaseException.SystemError -> throw it
+                        }
+                    }
                 )
                 .asState()
                 .also { githubRepos -> _uiState.update { it.copyWithGithubRepos(githubRepos) } }

@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.codecheck.index
 
+import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseException
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 import jp.co.yumemi.android.codecheck.utils.State
 
@@ -12,5 +13,5 @@ data class IndexUiState(
 }
 
 data class IndexErrorUiState(
-    val message: String,
+    val onSearchGithub: SearchGithubReposUseCaseException,
 )
