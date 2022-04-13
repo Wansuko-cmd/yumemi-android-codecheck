@@ -2,7 +2,6 @@
 
 package jp.co.yumemi.android.codecheck
 
-import com.google.common.truth.Truth.assertAbout
 import com.google.common.truth.Truth.assertThat
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
