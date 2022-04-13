@@ -21,29 +21,27 @@ import java.util.Date
 
 class ShowFragment : Fragment(R.layout.fragment_show) {
 
-    private val args: ShowFragmentArgs by navArgs()
-    private val githubRepo: GithubRepoUiState by lazy { args.githubRepo }
-    private val showViewModel: ShowViewModel by viewModel { parametersOf(githubRepo) }
-
-    private lateinit var binding: FragmentShowBinding
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentShowBinding.bind(view)
+        val args: ShowFragmentArgs by navArgs()
+        val githubRepo: GithubRepoUiState by lazy { args.githubRepo }
+        val showViewModel: ShowViewModel by viewModel { parametersOf(githubRepo) }
+
+        val binding = FragmentShowBinding.bind(view)
 
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect { showUiState ->
                 showUiState.githubRepoUiState.consume(
-                    success = { githubRepo -> setGithubRepo(githubRepo) }
+                    success = { githubRepo -> binding.setGithubRepo(githubRepo) }
                 )
             }
         }
         Log.d("検索した日時", Date(System.currentTimeMillis()).toString())
     }
 
-    private fun setGithubRepo(githubRepo: GithubRepoUiState) {
-        binding.apply {
+    private fun FragmentShowBinding.setGithubRepo(githubRepo: GithubRepoUiState) {
+        this.apply {
             showOwnerIconView.load(githubRepo.ownerIconUrl)
 
             showNameView.text = githubRepo.name
