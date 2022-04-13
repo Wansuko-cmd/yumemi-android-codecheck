@@ -14,17 +14,17 @@ import jp.co.yumemi.android.codecheck.Maybe
 import jp.co.yumemi.android.codecheck.Name
 import jp.co.yumemi.android.codecheck.OpenIssuesCount
 import jp.co.yumemi.android.codecheck.OwnerIconUrl
-import jp.co.yumemi.android.codecheck.SearchUseCaseQueryService
-import jp.co.yumemi.android.codecheck.SearchUseCaseQueryServiceException
+import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseQueryService
+import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseQueryServiceException
 import jp.co.yumemi.android.codecheck.StargazersCount
 import jp.co.yumemi.android.codecheck.WatchersCount
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-class SearchUseCaseQueryServiceImpl : SearchUseCaseQueryService {
+class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQueryService {
     override suspend fun get(
         queryString: String,
-    ): Maybe<List<GithubRepo>, SearchUseCaseQueryServiceException> = try {
+    ): Maybe<List<GithubRepo>, SearchGithubReposUseCaseQueryServiceException> = try {
         val client = HttpClient(Android) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(
@@ -44,7 +44,7 @@ class SearchUseCaseQueryServiceImpl : SearchUseCaseQueryService {
             .map { it.toGithubRepo() }
             .let { Maybe.Success(it) }
     } catch (e: Exception) {
-        Maybe.Failure(SearchUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
     }
 }
 
