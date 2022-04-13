@@ -21,10 +21,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class IndexFragment : Fragment(R.layout.fragment_index) {
 
-    private val indexViewModel by viewModel<IndexViewModel>()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val indexViewModel by viewModel<IndexViewModel>()
 
         val binding = FragmentIndexBinding.bind(view)
 

@@ -18,6 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["listener"] = "leakcanary.FailTestOnLeakRunListener"
     }
 
     buildTypes {
@@ -86,4 +87,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    val leakcanaryVersion = "2.6"
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion")
+    androidTestImplementation("com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion")
 }
