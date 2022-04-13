@@ -5,8 +5,13 @@
 
     <string name="index_message_connection_error">ネットワークの接続状況を確認してください</string>
 
+    <string name="show_language_not_found">Language Not Found</string>
     <string name="show_stars_view_text">%s stars</string>
+    <string name="show_stars_view_text_not_found">Stars Not Found</string>
     <string name="show_watchers_view_text">%s watchers</string>
+    <string name="show_watchers_view_text_not_found">Watchers Not Found</string>
     <string name="show_forks_view_text">%s forks</string>
+    <string name="show_forks_view_text_not_found">Forks Not Found</string>
     <string name="show_open_issues_view_text">%s open issues</string>
+    <string name="show_open_issues_view_text_not_found">Open Issues Not Found</string>
 </resources>
