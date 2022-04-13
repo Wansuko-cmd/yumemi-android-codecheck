@@ -17,9 +17,6 @@ class SearchGithubReposUseCaseImpl(
         is SearchGithubReposUseCaseQueryServiceException.ConnectionException ->
             SearchGithubReposUseCaseException.ConnectionException(message = this.message)
         is SearchGithubReposUseCaseQueryServiceException.SystemError ->
-            SearchGithubReposUseCaseException.SystemError(
-                message = this.message,
-                cause = this.cause,
-            )
+            throw this
     }
 }

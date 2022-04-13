@@ -12,6 +12,4 @@ data class IndexUiState(
     ) = this.copy(githubRepos = githubRepos)
 }
 
-data class IndexErrorUiState(
-    val onSearchGithub: SearchGithubReposUseCaseException,
-)
+data class IndexErrorUiState(val message: String)

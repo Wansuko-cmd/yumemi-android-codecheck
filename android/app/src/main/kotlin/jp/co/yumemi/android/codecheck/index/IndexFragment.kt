@@ -55,7 +55,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             indexViewModel.uiState.collect { indexUiState ->
                 indexUiState.githubRepos.consume(
                     success = { indexEpoxyController.setData(it) },
-                    failure = { showErrorMessage(it.onSearchGithub.message.orEmpty()) },
+                    failure = { showErrorMessage(it.message) },
                     loading = {},
                 )
             }

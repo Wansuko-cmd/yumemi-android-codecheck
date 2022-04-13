@@ -4,9 +4,9 @@
 package jp.co.yumemi.android.codecheck.index
 
 import android.app.Application
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import jp.co.yumemi.android.codecheck.R
 import jp.co.yumemi.android.codecheck.SearchGithubReposUseCase
 import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseException
 import jp.co.yumemi.android.codecheck.mapBoth
@@ -37,7 +37,8 @@ class IndexViewModel(
                     success = { githubRepos -> githubRepos.map { it.toUiState() } },
                     failure = {
                         when(it) {
-                            is SearchGithubReposUseCaseException.SystemError -> throw it
+                            is SearchGithubReposUseCaseException.ConnectionException ->
+                                IndexErrorUiState(application.getString(R.string.index_message_connection_error))
                         }
                     }
                 )
