@@ -33,16 +33,9 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         launchInLifecycleScope(Lifecycle.State.STARTED) {
             showViewModel.uiState.collect {
                 it.githubRepoUiState.consume(
-                    success = {
-                        binding.apply {
-                            showOwnerIconView.load(githubRepo.ownerIconUrl)
-                            showNameView.text = githubRepo.name
-                            showLanguageView.text = githubRepo.language
-                            showStarsView.text = "${githubRepo.stargazersCount} stars"
-                            showWatchersView.text = "${githubRepo.watchersCount} watchers"
-                            showForksView.text = "${githubRepo.forksCount} forks"
-                            showOpenIssuesView.text = "${githubRepo.openIssuesCount} open issues"
-                        }
+                    success = { githubRepo ->
+                        binding.githubRepo = githubRepo
+                        binding.showOwnerIconView.load(githubRepo.ownerIconUrl)
                     }
                 )
             }
