@@ -52,4 +52,18 @@ class SearchGithubReposUseCaseImplTest {
 
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun 取得するときにExceptionが帰ればSearchGithubRepoUseCaseExceptionに切り替えて返す() = runTest {
+        val mockedQueryString = "mockedQueryString"
+
+        coEvery {
+            queryService.get(mockedQueryString)
+        } returns Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(""))
+
+        val actual = target.get(mockedQueryString)
+        val expected = Maybe.Failure(SearchGithubReposUseCaseException.ConnectionException(""))
+
+        assertThat(actual).isEqualTo(expected)
+    }
 }
