@@ -1,10 +1,8 @@
 name: 'ktlintを実行'
 on:
-  workflow_dispatch:
-  push:
-  pull_request:
-    types:
-      - opened
+  - pull_request
+  - push
+  - workflow_dispatch
 jobs:
   ktlint:
     runs-on: ubuntu-latest
