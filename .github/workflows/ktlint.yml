@@ -10,14 +10,10 @@ jobs:
       - name: 現ブランチからチェックアウト
         uses: actions/checkout@v3
 
-      - name: 現ブランチを確認
-        run: git branch
+      - name: ./gradlewに権限を付与
+        run: |
+          chmod 777 ${{ github.workspace }}/gradlew
 
-      - name: 問題のコードを実行
-        run: git rev-parse --show-prefix
-
-      - name: ktlintを実行
-        uses: ScaCap/action-ktlint@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
+      - name: ktlintを実行(gradlew)
+        run: |
+          ${{ github.workspace }}/gradlew ktlintCheck
