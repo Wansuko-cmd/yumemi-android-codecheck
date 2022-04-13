@@ -45,7 +45,7 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             addItemDecoration(
                 DividerItemDecoration(
                     requireContext(),
-                    (layoutManager as LinearLayoutManager).orientation
+                    (layoutManager as LinearLayoutManager).orientation,
                 )
             )
             adapter = indexEpoxyController.adapter
