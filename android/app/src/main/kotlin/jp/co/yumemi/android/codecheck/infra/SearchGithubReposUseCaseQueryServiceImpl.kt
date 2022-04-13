@@ -2,6 +2,8 @@ package jp.co.yumemi.android.codecheck.infra
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
+import io.ktor.client.features.HttpRequestTimeoutException
+import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
@@ -20,6 +22,7 @@ import jp.co.yumemi.android.codecheck.StargazersCount
 import jp.co.yumemi.android.codecheck.WatchersCount
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.net.UnknownHostException
 
 class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQueryService {
     override suspend fun get(
@@ -35,6 +38,9 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
                     }
                 )
             }
+            install(HttpTimeout) {
+                requestTimeoutMillis = 1000
+            }
         }
         client.get<GithubRepoSerializable>("https://api.github.com/search/repositories") {
             header("Accept", "application/vnd.github.v3+json")
@@ -42,7 +48,9 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
         }
             .toGithubRepos()
             .let { Maybe.Success(it) }
-    } catch (e: Exception) {
+    } catch (e: HttpRequestTimeoutException) {
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
+    } catch (e: UnknownHostException) {
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
     }
 }
