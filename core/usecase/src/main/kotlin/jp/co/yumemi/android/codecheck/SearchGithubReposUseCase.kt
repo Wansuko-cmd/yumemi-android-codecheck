@@ -7,7 +7,7 @@ interface SearchGithubReposUseCase {
 }
 
 sealed class SearchGithubReposUseCaseException : Exception() {
-    class ConnectionException(
+    data class ConnectionException(
         override val message: String,
     ) : SearchGithubReposUseCaseException()
 }
