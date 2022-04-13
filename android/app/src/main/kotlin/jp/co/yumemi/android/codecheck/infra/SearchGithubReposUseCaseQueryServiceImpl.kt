@@ -39,7 +39,7 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
                 )
             }
             install(HttpTimeout) {
-                requestTimeoutMillis = 1000
+                requestTimeoutMillis = 2000
             }
         }
         client.get<GithubRepoSerializable>("https://api.github.com/search/repositories") {

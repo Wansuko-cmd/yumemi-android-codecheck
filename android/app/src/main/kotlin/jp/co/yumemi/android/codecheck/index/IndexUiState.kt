@@ -1,6 +1,5 @@
 package jp.co.yumemi.android.codecheck.index
 
-import jp.co.yumemi.android.codecheck.SearchGithubReposUseCaseException
 import jp.co.yumemi.android.codecheck.utils.GithubRepoUiState
 import jp.co.yumemi.android.codecheck.utils.State
 
