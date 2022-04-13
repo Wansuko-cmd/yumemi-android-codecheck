@@ -49,9 +49,9 @@ class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQuerySe
             .toGithubRepos()
             .let { Maybe.Success(it) }
     } catch (e: HttpRequestTimeoutException) {
-        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
     } catch (e: UnknownHostException) {
-        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionError(e.message.orEmpty()))
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
     }
 }
 
