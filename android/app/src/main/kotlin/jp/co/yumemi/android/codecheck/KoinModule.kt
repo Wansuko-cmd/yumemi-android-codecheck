@@ -2,7 +2,6 @@ package jp.co.yumemi.android.codecheck
 
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.android.Android
-import io.ktor.client.engine.mock.MockEngine
 import jp.co.yumemi.android.codecheck.index.IndexViewModel
 import jp.co.yumemi.android.codecheck.infra.SearchGithubReposUseCaseQueryServiceImpl
 import jp.co.yumemi.android.codecheck.show.ShowViewModel

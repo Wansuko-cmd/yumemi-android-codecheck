@@ -2,7 +2,6 @@ package jp.co.yumemi.android.codecheck.infra
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.android.Android
 import io.ktor.client.features.HttpRequestTimeoutException
 import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
