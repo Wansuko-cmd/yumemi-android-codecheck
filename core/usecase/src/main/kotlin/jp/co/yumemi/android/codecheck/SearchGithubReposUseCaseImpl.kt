@@ -16,6 +16,8 @@ class SearchGithubReposUseCaseImpl(
     private fun SearchGithubReposUseCaseQueryServiceException.toSearchGithubReposUseCaseException() = when (this) {
         is SearchGithubReposUseCaseQueryServiceException.ConnectionException ->
             SearchGithubReposUseCaseException.ConnectionException(message = this.message)
+        is SearchGithubReposUseCaseQueryServiceException.ServerException ->
+            SearchGithubReposUseCaseException.ServerException(message = this.message)
         is SearchGithubReposUseCaseQueryServiceException.SystemError ->
             throw this
     }
