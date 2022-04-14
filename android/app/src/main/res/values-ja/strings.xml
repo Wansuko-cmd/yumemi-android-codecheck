@@ -4,6 +4,7 @@
     <string name="written_language">Written in %s</string>
 
     <string name="index_message_connection_error">ネットワークの接続状況を確認してください</string>
+    <string name="index_message_server_error">サーバーがダウンしています</string>
 
     <string name="show_language_not_found">言語は設定されていません</string>
     <string name="show_stars_view_text">%s stars</string>

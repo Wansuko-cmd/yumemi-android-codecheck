@@ -4,6 +4,7 @@
     <string name="written_language">Written in %s</string>
 
     <string name="index_message_connection_error">Check your network connection.</string>
+    <string name="index_message_server_error">Server downs now.</string>
 
     <string name="show_language_not_found">Language Not Found</string>
     <string name="show_stars_view_text">%s stars</string>

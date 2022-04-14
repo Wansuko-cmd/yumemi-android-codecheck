@@ -10,4 +10,7 @@ sealed class SearchGithubReposUseCaseException : Exception() {
     data class ConnectionException(
         override val message: String,
     ) : SearchGithubReposUseCaseException()
+    data class ServerException(
+        override val message: String,
+    ) : SearchGithubReposUseCaseException()
 }
