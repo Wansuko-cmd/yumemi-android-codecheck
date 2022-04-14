@@ -90,4 +90,5 @@ dependencies {
 
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
     testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation("io.ktor:ktor-client-mock:1.6.4")
 }
