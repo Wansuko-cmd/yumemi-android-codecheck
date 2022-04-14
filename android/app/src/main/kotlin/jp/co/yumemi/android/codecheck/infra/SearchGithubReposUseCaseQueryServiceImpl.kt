@@ -1,7 +1,7 @@
 package jp.co.yumemi.android.codecheck.infra
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.features.HttpRequestTimeoutException
 import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
@@ -24,11 +24,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.net.UnknownHostException
 
-class SearchGithubReposUseCaseQueryServiceImpl : SearchGithubReposUseCaseQueryService {
+class SearchGithubReposUseCaseQueryServiceImpl(
+    private val engine: HttpClientEngine,
+) : SearchGithubReposUseCaseQueryService {
     override suspend fun get(
         queryString: String,
     ): Maybe<List<GithubRepo>, SearchGithubReposUseCaseQueryServiceException> = try {
-        val client = HttpClient(Android) {
+        val client = HttpClient(engine) {
             install(JsonFeature) {
                 serializer = KotlinxSerializer(
                     kotlinx.serialization.json.Json {

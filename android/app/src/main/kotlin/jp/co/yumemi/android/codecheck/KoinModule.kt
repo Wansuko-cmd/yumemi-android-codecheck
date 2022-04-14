@@ -1,5 +1,7 @@
 package jp.co.yumemi.android.codecheck
 
+import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.android.Android
 import jp.co.yumemi.android.codecheck.index.IndexViewModel
 import jp.co.yumemi.android.codecheck.infra.SearchGithubReposUseCaseQueryServiceImpl
 import jp.co.yumemi.android.codecheck.show.ShowViewModel
@@ -18,5 +20,8 @@ val module = module {
     single<SearchGithubReposUseCase> { SearchGithubReposUseCaseImpl(get()) }
 
     /*** QueryService ***/
-    single<SearchGithubReposUseCaseQueryService> { SearchGithubReposUseCaseQueryServiceImpl() }
+    single<SearchGithubReposUseCaseQueryService> { SearchGithubReposUseCaseQueryServiceImpl(get()) }
+
+    /*** Engine ***/
+    single<HttpClientEngine> { Android.create() }
 }
