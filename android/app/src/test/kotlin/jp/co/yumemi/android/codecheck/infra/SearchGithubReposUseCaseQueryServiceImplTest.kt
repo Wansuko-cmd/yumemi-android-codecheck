@@ -6,6 +6,8 @@ import com.google.common.truth.Truth.assertThat
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond
 import io.ktor.client.engine.mock.respondBadRequest
+import io.ktor.client.engine.mock.respondError
+import io.ktor.client.features.ServerResponseException
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
@@ -68,6 +70,21 @@ class SearchGithubReposUseCaseQueryServiceImplTest {
         )
 
         assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun 通信時に500台のステータスコードが返ればServerExceptionを返す() = runTest {
+        val mockEngine = MockEngine {
+            respondError(HttpStatusCode.InternalServerError)
+        }
+        val mockedQueryString = "mockedQueryString"
+        val target = SearchGithubReposUseCaseQueryServiceImpl(mockEngine)
+
+        val actual: Maybe.Failure<SearchGithubReposUseCaseQueryServiceException> =
+            target.get(mockedQueryString) as Maybe.Failure<SearchGithubReposUseCaseQueryServiceException>
+
+        assertThat(actual.value)
+            .isInstanceOf(SearchGithubReposUseCaseQueryServiceException.ServerException::class.java)
     }
 
     @Test
