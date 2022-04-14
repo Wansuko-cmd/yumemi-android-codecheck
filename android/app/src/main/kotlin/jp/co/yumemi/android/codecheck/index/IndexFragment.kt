@@ -55,14 +55,14 @@ class IndexFragment : Fragment(R.layout.fragment_index) {
             indexViewModel.uiState.collect { indexUiState ->
                 indexUiState.githubRepos.consume(
                     success = { indexEpoxyController.setData(it) },
-                    failure = { showErrorMessage(it.message) },
-                    loading = {},
+                    failure = { showMessage(it.message) },
+                    loading = { showMessage(getString(R.string.index_message_loading)) },
                 )
             }
         }
     }
 
-    private fun showErrorMessage(message: String) {
+    private fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
