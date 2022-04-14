@@ -39,6 +39,8 @@ class IndexViewModel(
                         when (it) {
                             is SearchGithubReposUseCaseException.ConnectionException ->
                                 IndexErrorUiState(application.getString(R.string.index_message_connection_error))
+                            is SearchGithubReposUseCaseException.ServerException ->
+                                IndexErrorUiState(application.getString(R.string.index_message_server_error))
                         }
                     }
                 )
