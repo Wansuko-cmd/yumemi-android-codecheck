@@ -88,7 +88,7 @@ class SearchGithubReposUseCaseQueryServiceImplTest {
     }
 
     @Test
-    fun 通信時に200以外のステータスコードが返ればそれをThrowする() = runTest {
+    fun 通信時に200と500以外のステータスコードが返ればそれをThrowする() = runTest {
         val mockEngine = MockEngine {
             respondBadRequest()
         }
