@@ -4,6 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.20"
 }
 
 android {
@@ -17,6 +18,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments["listener"] = "leakcanary.FailTestOnLeakRunListener"
     }
 
     buildTypes {
@@ -38,6 +40,9 @@ android {
     viewBinding {
         isEnabled = true
     }
+    dataBinding {
+        isEnabled = true
+    }
 }
 
 dependencies {
@@ -53,9 +58,37 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
+    implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-android:1.6.4")
+    implementation("io.ktor:ktor-client-serialization:1.6.4")
+
     implementation("io.coil-kt:coil:1.3.2")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    // Project
+    implementation(project(":core:domain"))
+    implementation(project(":core:usecase"))
+    implementation(project(":utils"))
+
+    // Koin
+    val koinVersion = "3.1.6"
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+
+    // KotlinX Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+
+    // Epoxy
+    val epoxyVersion = "4.6.3"
+    implementation("com.airbnb.android:epoxy:$epoxyVersion")
+    implementation("com.airbnb.android:epoxy-databinding:$epoxyVersion")
+    kapt("com.airbnb.android:epoxy-processor:$epoxyVersion")
+
+    val leakcanaryVersion = "2.6"
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion")
+    androidTestImplementation("com.squareup.leakcanary:leakcanary-android-instrumentation:$leakcanaryVersion")
+
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation("io.ktor:ktor-client-mock:1.6.4")
 }

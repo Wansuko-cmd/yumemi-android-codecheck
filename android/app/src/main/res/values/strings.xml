@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">Android Engineer CodeCheck</string>
-    <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+    <string name="index_search_input_text_hint">Write Github Repository Name…</string>
     <string name="written_language">Written in %s</string>
+
+    <string name="index_message_loading">Loading…</string>
+    <string name="index_message_connection_error">Check your network connection.</string>
+    <string name="index_message_server_error">Server downs now.</string>
+
+    <string name="show_language_not_found">Language Not Found</string>
+    <string name="show_stars_view_text">%s stars</string>
+    <string name="show_stars_view_text_not_found">Stars Not Found</string>
+    <string name="show_watchers_view_text">%s watchers</string>
+    <string name="show_watchers_view_text_not_found">Watchers Not Found</string>
+    <string name="show_forks_view_text">%s forks</string>
+    <string name="show_forks_view_text_not_found">Forks Not Found</string>
+    <string name="show_open_issues_view_text">%s open issues</string>
+    <string name="show_open_issues_view_text_not_found">Open Issues Not Found</string>
 </resources>
