@@ -3,6 +3,7 @@
     <string name="index_search_input_text_hint">GitHub のリポジトリを検索できるよー</string>
     <string name="written_language">Written in %s</string>
 
+    <string name="index_message_loading">ローディング中…</string>
     <string name="index_message_connection_error">ネットワークの接続状況を確認してください</string>
     <string name="index_message_server_error">サーバーがダウンしています</string>
 

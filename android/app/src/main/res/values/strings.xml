@@ -3,6 +3,7 @@
     <string name="index_search_input_text_hint">Write Github Repository Name…</string>
     <string name="written_language">Written in %s</string>
 
+    <string name="index_message_loading">Loading…</string>
     <string name="index_message_connection_error">Check your network connection.</string>
     <string name="index_message_server_error">Server downs now.</string>
 
