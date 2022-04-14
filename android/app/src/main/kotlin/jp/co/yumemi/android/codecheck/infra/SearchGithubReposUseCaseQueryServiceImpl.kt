@@ -4,6 +4,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.features.HttpRequestTimeoutException
 import io.ktor.client.features.HttpTimeout
+import io.ktor.client.features.ServerResponseException
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
@@ -54,6 +55,8 @@ class SearchGithubReposUseCaseQueryServiceImpl(
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
     } catch (e: UnknownHostException) {
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ConnectionException(e.message.orEmpty()))
+    } catch (e: ServerResponseException) {
+        Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.ServerException(e.message.orEmpty()))
     } catch (e: Exception) {
         Maybe.Failure(SearchGithubReposUseCaseQueryServiceException.SystemError(e.message.orEmpty(), e))
     }
